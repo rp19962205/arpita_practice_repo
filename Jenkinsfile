@@ -1,23 +1,45 @@
 pipeline {
-    agent {
-        node {
-            label 'built-in'
-            customWorkspace '/mnt/slave1'
-        }
+    agent { label '2023Q1' }
+
+    environment {
+        DEPLOY_DIR = "/var/www/html"
     }
 
     stages {
-        stage("one") {
+
+        stage('Clone Repository') {
             steps {
-                sh "sudo yum install httpd -y"
+                git branch: '2025Q1', url: 'https://github.com/Shubhamtapkir29/2025.git'
             }
         }
 
-        stage("two") {
+        stage('Clean Deploy Directory') {
             steps {
-                sh "sudo service httpd start"
-                sh "sudo cp -r index.html /var/www/html/"
+                sh '''
+                echo "🧹 Cleaning $DEPLOY_DIR on arpita-slave"
+                sudo rm -rf ${DEPLOY_DIR}/*
+                '''
             }
+        }
+
+        stage('Deploy to Apache') {
+            steps {
+                sh '''
+                echo "🚀 Deploying to Apache on arpita-slave"
+                sudo cp -r * ${DEPLOY_DIR}/
+                sudo chmod -R 755 ${DEPLOY_DIR}
+                sudo systemctl restart httpd
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment on 'arpita-slave' successful!"
+        }
+        failure {
+            echo "❌ Deployment failed. Check logs on '2023Q1'."
         }
     }
 }
