@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git branch: '2025Q1', url: 'https://github.com/rp19962205/arpita_practice_repo.git'
+                git branch: '2023Q1', url: 'https://github.com/rp19962205/arpita_practice_repo.git'
             }
         }
 
