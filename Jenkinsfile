@@ -1,5 +1,5 @@
 pipeline {
-    agent { label '2023Q1' }
+    agent { label 'built-in' }
 
     environment {
         DEPLOY_DIR = "/var/www/html"
