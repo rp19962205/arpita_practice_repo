@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git branch: '2025Q1', url: 'https://github.com/Shubhamtapkir29/2025.git'
+                git branch: 'master', url: 'https://github.com/rp19962205/arpita_practice_repo.git'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
             echo "✅ Deployment on 'arpita-slave' successful!"
         }
         failure {
-            echo "❌ Deployment failed. Check logs on '2023Q1'."
+            echo "❌ Deployment failed. Check logs on 'master'."
         }
     }
 }
